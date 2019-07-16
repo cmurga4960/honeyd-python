@@ -11,13 +11,15 @@ import subprocess
 
 from json import loads
 from lxml import etree
-from ConfigParser import ConfigParser, NoSectionError, NoOptionError
+from configparser import ConfigParser, NoSectionError, NoOptionError
 
 import networkx
 
 from honeyd.core.parser import Parser
 from honeyd.core.element import Device, Route, External
 from honeyd.utilities.fetch_public_ip import get_ext_ip
+
+unicode = str
 
 logger = logging.getLogger(__name__)
 

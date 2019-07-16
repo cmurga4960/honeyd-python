@@ -1,6 +1,5 @@
 # Honeyd-python
 ---
-Modified to work with python3
 
 Honeyd-python is a low-interaction honeypot implementation based on the core principles of [Honeyd](http://www.honeyd.org/) honeypot. The honeypot allows a single host machine to claim unused IP addresses on LAN and simulate a virtual network of honeypots. The virtual honeypots can be configured to emulate the network stack of an operating system from [Nmap's OS detection database](https://nmap.org/book/nmap-os-db.html). Honeyd-python can redirect attacks to remote honeypots via network tunneling. Honeyd-python provides basic attack data statistics on a web server accessible at ``localhost:8080``.
 

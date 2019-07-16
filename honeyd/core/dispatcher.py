@@ -16,6 +16,7 @@ from impacket import ImpactPacket, ImpactDecoder
 
 from honeyd.loggers.attack_event import AttackEvent
 
+unicode = str
 logger = logging.getLogger(__name__)
 
 
@@ -76,6 +77,7 @@ class Dispatcher(object):
         """
         eth_src, eth_dst, eth_type
         """
+        #logger.info('ETH:\n++++++++++++++\n' +str(eth)+'\n*************\n')
         eth_type = eth.get_ether_type()
         eth_src = eth.as_eth_addr(eth.get_ether_shost())
         eth_dst = eth.as_eth_addr(eth.get_ether_dhost())
@@ -260,8 +262,10 @@ class Dispatcher(object):
         reply_eth.contains(reply_ip)
 
         logger.debug('Sending reply: %s', reply_eth)
+        #logger.debug('pcapy_obj: %s', str(dir(self.pcapy_object)) )
         # send raw frame
         try:
+            
             self.pcapy_object.sendpacket(reply_eth.get_packet())
         except pcapy.PcapError as ex:
             logger.exception('Exception: Cannot send reply packet: %s', ex)
@@ -380,7 +384,10 @@ class Dispatcher(object):
             return
 
         # log attack event
+        
+        logger.info('PKT:' + ' '.join('{:02x}'.format(x) for x in pkt))
         event = self._log_event(eth)
+        #logger.info("EVENT:\n~~~~~~~~~~\n"+str(event)+"\n-----------\n")
         if event is None:
             return
 
@@ -389,12 +396,13 @@ class Dispatcher(object):
             self.arp_reply(arp)
             return
         elif event['ethernet_type'] != ImpactPacket.IP.ethertype:
-            logger.info('Dropping packet: Not supported non-IP packet type %s', hex(event['ethernet_type']))
+            #logger.info('Dropping packet: Not supported non-IP packet type %s', hex(event['ethernet_type']))
             return
 
         # ip layer
         ip = eth.child()
         ip_ttl = ip.get_ip_ttl()
+        logger.info("IP PACKET:\n"+str(eth))
 
         # get tunnel packets
         ip_tunnels = [str(t[1]) for t in self.tunnels]

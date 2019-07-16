@@ -25,15 +25,15 @@ package_directory = os.path.dirname(os.path.abspath(honeyd.__file__))
 
 def logo():
     """Function prints out logo and version number."""
-    print """\
+    print ("""\
  _                     _
 | |_ ___ ___ ___ _ _ _| |
 |   | . |   | -_| | | . |
 |_|_|___|_|_|___|_  |___|
                 |___|
-    """
-    print 'Author: Peter Sooky <448291@mail.muni.cz>'
-    print 'Honeyd-python {0}'.format(honeyd.__version__)
+    """)
+    print ('Author: Peter Sooky <448291@mail.muni.cz>')
+    print ('Honeyd-python {0}'.format(honeyd.__version__))
 
 
 def setup_logging(log_file, verbose):
@@ -143,9 +143,12 @@ def unhandled_exception(greenlet, expected_args):
     logger.error('Error: Stopping honeypot: %s is dead: %s', greenlet, greenlet.exception)
     logger.info('Closing tunnel interfaces: %s', tunnels)
     Builder().teardown_tunnels(tunnels, package_directory, config)
-    if arp_daemon:
-        logging.info('Terminating arpd daemon.')
-        arp_daemon.kill()
+    try:
+        if arp_daemon:
+            logging.info('Terminating arpd daemon.')
+            arp_daemon.kill()
+    except:
+         pass
     if web_server:
         logging.info('Terminating web server.')
         web_server.kill()
@@ -244,9 +247,12 @@ def main():
     greenlet.kill()
     logger.info('Closing tunnel interfaces: %s', tunnels)
     Builder().teardown_tunnels(tunnels, package_directory, args.config)
-    if arp_daemon:
-        logging.info('Terminating arpd daemon.')
-        arp_daemon.kill()
+    try:
+        if arp_daemon:
+            logging.info('Terminating arpd daemon.')
+            arp_daemon.kill()
+    except:
+        pass
     if web_server:
         logging.info('Terminating web server.')
         web_server.kill()

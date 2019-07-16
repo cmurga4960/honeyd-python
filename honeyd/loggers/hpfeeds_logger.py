@@ -2,7 +2,7 @@
 """HPfeeds_logger.py is reponsible for connecting to an hpfeeds broker and submitting the attack-related information"""
 import logging
 import socket
-from ConfigParser import ConfigParser, NoSectionError, NoOptionError
+from configparser import ConfigParser, NoSectionError, NoOptionError
 
 import hpfeeds
 import gevent

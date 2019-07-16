@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Mysqldb_logger.py is responsible for creating and inserting data into the database."""
 import logging
-from ConfigParser import ConfigParser, NoSectionError, NoOptionError
+from configparser import ConfigParser, NoSectionError, NoOptionError
 from warnings import filterwarnings
 
 import gevent

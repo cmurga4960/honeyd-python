@@ -20,7 +20,7 @@ class Parser(object):
             mac_file : nmap-mac-prefixes file
         """
         logger.debug('Initializing Nmap fingerprint parser.')
-        fd_fingerprint_file = open(fingerprint_file)
+        fd_fingerprint_file = open(fingerprint_file, 'r')
         self.fingerprint_file = mmap.mmap(fd_fingerprint_file.fileno(), 0, access=mmap.ACCESS_READ)
 
         fd_mac_file = open(mac_file)
@@ -33,10 +33,11 @@ class Parser(object):
         Return:
             instance of a personality object defining network stack behavior
         """
+        print(type(personality),personality) 
         logger.debug('Initializing personality for device %s', personality)
         # first occurence of fingerprint name and empty line delimiter
-        start_index = self.fingerprint_file.find('Fingerprint ' + personality)
-        end_index = self.fingerprint_file.find('\n\n', start_index)
+        start_index = self.fingerprint_file.find(str('Fingerprint ' + personality).encode())
+        end_index = self.fingerprint_file.find('\n\n'.encode(), start_index)
 
         try:
             self.fingerprint_file.seek(start_index, os.SEEK_SET)
@@ -47,6 +48,8 @@ class Parser(object):
         p = Personality()
         # File contents defined at https://nmap.org/book/osdetect-methods.html
         for line in fingerprint_section:
+            print(type(line),line)
+            line = line.decode('utf-8')
             if line.startswith('Fingerprint'):
                 # free text description
                 p.fp_name = line[len('Fingerprint '):]
@@ -105,7 +108,7 @@ class Parser(object):
             if len(vendor_list):
                 current_vendor = vendor_list.pop()
                 # looking for exact matches
-                match = re.match(r'^([0-9A-F]{6})\s' + current_vendor + '$', self.mac_file, re.MULTILINE)
+                match = re.match(r'^([0-9A-F]{6})\s' + current_vendor + '$', self.mac_file[:].decode('utf-8'), re.MULTILINE)
                 if match is not None:
                     personality.mac_oui = match.group(1)
             else:
