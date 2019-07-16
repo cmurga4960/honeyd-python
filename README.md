@@ -1,5 +1,6 @@
 # Honeyd-python
 ---
+Modified to work with python3
 
 Honeyd-python is a low-interaction honeypot implementation based on the core principles of [Honeyd](http://www.honeyd.org/) honeypot. The honeypot allows a single host machine to claim unused IP addresses on LAN and simulate a virtual network of honeypots. The virtual honeypots can be configured to emulate the network stack of an operating system from [Nmap's OS detection database](https://nmap.org/book/nmap-os-db.html). Honeyd-python can redirect attacks to remote honeypots via network tunneling. Honeyd-python provides basic attack data statistics on a web server accessible at ``localhost:8080``.
 
@@ -9,27 +10,25 @@ Honeyd-python is a low-interaction honeypot implementation based on the core pri
 Honeyd-python supports integration into [Modern Honey Network](https://github.com/threatstream/mhn), the required files can be located in ``deploy/``. The honeypot supports Ubuntu 16.04 LTS and CentOS 7 distributions.
 
 In case Modern Honey Network integration is not desired, then
-1. Install pip2.7:
-```
-wget https://bootstrap.pypa.io/ez_setup.py
-/usr/local/bin/python2.7 ./ez_setup.py install
-/usr/local/bin/easy_install-2.7 pip
-```
-2. Install dependencies (CentOS 7):
+1. Install dependencies (CentOS 7):
 ```
 wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
 rpm -ivh mysql-community-release-el7-5.noarch.rpm
 yum -y update
 yum -y install git mysql-server mysql-devel python-devel python-setuptools MySQL-python libpcap-devel tkinter tk-devel
 ```
-2. Install dependencies (Ubuntu 16.04 LTS):
+1. Install dependencies (Ubuntu 16.04 LTS):
 ```
 apt-get -y install git farpd mysql-server libmysqlclient-dev python-mysqldb libpcap-dev python-tk
 ```
-3. Through pip2.7 install requirements from repository:
+2. Through pip3 install requirements from repository:
 ```
-pip2.7 install -r requirements.txt
+pip3 install -r requirements.txt
 ```
+3. Replace broken impacket library /usr/local/lib/python3.7/dist-packages/impacket with contents of zip folder
+```
+```
+4. Replace broken /usr/lib/python3.7/configparser.py 
 
 ### CONFIGURATION
 ---
