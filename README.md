@@ -144,9 +144,9 @@ Honeyd-python supports the following flags:
 
 Example usage of Honeyd-python for the given sample configuration:
 * with active traffic interception:  
-``# sudo python2.7 honeyd.py -i enp0s3 -a 10.66.0.0/16``
+``# sudo python3 honeyd.py -i enp0s3 -a 10.66.0.0/16``
 * without active interception traffic has to be routed to the honeypot (currently required for CentOS 7):  
-``# sudo python2.7 honeyd.py -i enp0s3``
+``# sudo python3 honeyd.py -i enp0s3``
 
 ### LICENSE
 ---
